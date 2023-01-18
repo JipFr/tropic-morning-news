@@ -43,6 +43,7 @@ body {
 	height: var(--size);
 	shape-image-threshold: 0.8;
 	shape-margin: 10px;
+	pointer-events: none;
 }
 
 /* Credits */
@@ -58,10 +59,12 @@ body {
 	font-weight: 100;
 	/* text-align: justify; */
 	text-align-last: justify;
+	transition: opacity 500ms;
+	opacity: 0;
 }
 
-.credits p {
-	/* color: white; */
+.content.text-visible p {
+	opacity: 1;
 }
 
 p {

@@ -3,7 +3,7 @@ let leftSide = true;
 // const text = Array(1e3)
 // 	.fill(0)
 // 	.map((_, i) => i)
-// 	.join(" ");
+// .join(" ");
 
 const text = `I wasn't starting yet, I didn't even think you were listening
 I wasn't ready at all to say anything about anything interesting
@@ -74,7 +74,11 @@ Something somehow has you rapidly improving
 
 window.addEventListener("load", async () => {
 	layoutWords();
-	requestAnimationFrame(layoutWords);
+	setTimeout(() => {
+		layoutWords();
+		document.querySelector(".content").classList.add("text-visible");
+	}, 500);
+
 	let resizeDebounce;
 	window.addEventListener("resize", () => {
 		if (resizeDebounce) clearTimeout(resizeDebounce);
@@ -83,7 +87,6 @@ window.addEventListener("load", async () => {
 });
 
 async function layoutWords() {
-	console.time("Outline");
 	leftSide = true;
 	const words = text
 		.replace(/(tropic|morning|news)/gi, "<strong>$1</strong>")
@@ -94,9 +97,13 @@ async function layoutWords() {
 		side.querySelectorAll("p").forEach((el) => el.remove());
 		side.innerHTML += "<p>Hi!</p>";
 	});
-	const baseHeight = document.querySelector(".content p").scrollHeight;
+
+	const baseHeight = document
+		.querySelector(".content p")
+		.getBoundingClientRect().height;
 	document.querySelectorAll(".content p").forEach((el) => (el.innerHTML = ""));
 
+	// await new Promise((resolve) => requestAnimationFrame(resolve, 0));
 	for (let i = 0; i < words.length; i++) {
 		const word = words[i];
 		const wrapper = document.querySelector(
@@ -105,17 +112,18 @@ async function layoutWords() {
 
 		const lastP = wrapper.children[wrapper.children.length - 1];
 
+		console.log(lastP.getBoundingClientRect(), baseHeight, word);
 		lastP.innerHTML += ` ${word}`;
-		while (lastP.scrollHeight > baseHeight) {
+		console.log(lastP.getBoundingClientRect(), baseHeight, word);
+		if (lastP.getBoundingClientRect().height > baseHeight) {
 			leftSide = !leftSide;
+
 			lastP.innerHTML = lastP.innerHTML.split(" ").slice(0, -1).join(" ");
 
 			wrapper.innerHTML += "<p></p>";
 
 			i--;
-			await new Promise((resolve) => requestAnimationFrame(resolve));
-			// await new Promise((resolve) => requestAnimationFrame(resolve, 0));
 		}
+		console.log("—");
 	}
-	console.timeEnd("Outline");
 }
