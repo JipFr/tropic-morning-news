@@ -118,7 +118,7 @@ function attemptSize(size) {
 	el.setAttribute("style", `--font-size: ${size}px`);
 	layoutWords(el);
 
-	const lastP = Array.from(el.querySelectorAll("p")).pop();
+	const lastP = Array.from(el.querySelectorAll(".left-half p")).pop();
 
 	const lastPRect = lastP.getBoundingClientRect();
 	const elRect = el.getBoundingClientRect();
@@ -136,7 +136,7 @@ function findBestSize() {
 		const a = attemptSize(size);
 		const diff = Math.abs(size - (size - a / 60));
 		console.log(size - a / 60);
-		if (diff < 0.03) i = 10; // Skip
+		if (diff < 0.01) i = 10; // Skip
 		size -= a / 60;
 	}
 	return size;
