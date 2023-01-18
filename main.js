@@ -136,7 +136,7 @@ function findBestSize() {
 		const a = attemptSize(size);
 		const diff = Math.abs(size - (size - a / 60));
 		console.log(size - a / 60);
-		if (diff < 0.01) i = 10; // Skip
+		if (diff < 0.03) i = 10; // Skip
 		size -= a / 60;
 	}
 	return size;

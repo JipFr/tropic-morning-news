@@ -1,12 +1,11 @@
 body {
+	margin: 0;
 	font-family: sans-serif;
-	/* background: black; */
 	min-height: 100vh;
 	display: flex;
-	justify-content: center;
 	flex-wrap: wrap;
+	justify-content: center;
 	align-items: center;
-	/* overflow: hidden; */
 }
 
 /* Wrapper */
@@ -63,6 +62,11 @@ body {
 
 .credits :last-child {
 	text-align: right;
+}
+
+.jip-credit {
+	width: 100%;
+	text-align: center;
 }
 
 /* Text */
